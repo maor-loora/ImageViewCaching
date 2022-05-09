@@ -8,22 +8,21 @@
 
 import SwiftUI
 
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-struct AsyncCachedImage<ContentPlaceholder, ContentError>: View where ContentPlaceholder: View, ContentError: View {
+public struct AsyncCachedImage<ContentPlaceholder, ContentError>: View where ContentPlaceholder: View, ContentError: View {
     @StateObject private var viewModel = AsyncCachedImageViewModel()
 
     private let url: URL?
     private let placeholder: () -> ContentPlaceholder?
     private let error: () -> ContentError?
 
-    init(strUrl: String? = nil,
+    public init(strUrl: String? = nil,
          @ViewBuilder placeholder: @escaping () -> ContentPlaceholder? = { nil },
          @ViewBuilder error: @escaping () -> ContentError? = { nil }
     ) {
         self.init(url: URL(string: strUrl ?? ""), placeholder: placeholder, error: error)
     }
 
-    init(url: URL? = nil,
+    public init(url: URL? = nil,
          @ViewBuilder placeholder: @escaping () -> ContentPlaceholder? = { nil },
          @ViewBuilder error: @escaping () -> ContentError? = { nil }
     ) {
@@ -32,7 +31,7 @@ struct AsyncCachedImage<ContentPlaceholder, ContentError>: View where ContentPla
         self.error = error
     }
 
-    var body: some View {
+    public var body: some View {
         VStack {
             switch viewModel.state {
             case .initial:
@@ -84,7 +83,6 @@ struct AsyncCachedImage<ContentPlaceholder, ContentError>: View where ContentPla
     }
 }
 
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 private final class AsyncCachedImageViewModel: ObservableObject {
 
     fileprivate enum AsyncCachedState: Equatable {
@@ -127,13 +125,12 @@ private final class AsyncCachedImageViewModel: ObservableObject {
     }
 }
 
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension AsyncCachedImage where ContentPlaceholder == EmptyView, ContentError == EmptyView {
-    init(strUrl: String? = nil) {
+    public init(strUrl: String? = nil) {
         self.init(url: URL(string: strUrl ?? ""))
     }
 
-    init(url: URL? = nil) {
+    public init(url: URL? = nil) {
         self.init(url: url) {
             EmptyView()
         } error: {
@@ -142,14 +139,13 @@ extension AsyncCachedImage where ContentPlaceholder == EmptyView, ContentError =
     }
 }
 
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension AsyncCachedImage where ContentPlaceholder == EmptyView {
-    init(strUrl: String? = nil,
+    public init(strUrl: String? = nil,
          @ViewBuilder error: @escaping () -> ContentError? = { nil }) {
         self.init(url: URL(string: strUrl ?? ""), error: error)
     }
 
-    init(url: URL? = nil,
+    public init(url: URL? = nil,
          @ViewBuilder error: @escaping () -> ContentError? = { nil }) {
         self.init(url: url) {
             EmptyView()
@@ -159,14 +155,13 @@ extension AsyncCachedImage where ContentPlaceholder == EmptyView {
     }
 }
 
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension AsyncCachedImage where ContentError == EmptyView {
-    init(strUrl: String? = nil,
+    public init(strUrl: String? = nil,
          @ViewBuilder placeholder: @escaping () -> ContentPlaceholder? = { nil }) {
         self.init(url: URL(string: strUrl ?? ""), placeholder: placeholder)
     }
 
-    init(url: URL? = nil,
+    public init(url: URL? = nil,
          @ViewBuilder placeholder: @escaping () -> ContentPlaceholder? = { nil }) {
         self.init(url: url) {
             placeholder()

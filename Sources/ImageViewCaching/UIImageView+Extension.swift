@@ -10,7 +10,7 @@
 import UIKit
 
 extension UIImageView {
-    func loadImage(fromURL url: String?,
+    public func loadImage(fromURL url: String?,
                    placeholderImage: UIImage? = nil,
                    errorImage: UIImage? = nil,
                    completion: ((UIImage?) -> Void)? = nil) {

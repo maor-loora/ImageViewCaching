@@ -10,7 +10,7 @@
 import Foundation
 import UIKit
 
-public extension URLCache {
+extension URLCache {
     // returns on background thread
     public func loadImage(url: URL, completion: @escaping (UIImage?) -> Void) {
         loadData(url: url) { data in
