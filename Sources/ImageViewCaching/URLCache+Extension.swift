@@ -12,20 +12,20 @@ import UIKit
 
 extension URLCache {
     // returns on background thread
-    public func loadImage(url: URL, completion: @escaping (UIImage?) -> Void) {
+    public func loadImage(url: URL, completion: ((UIImage?) -> Void)? = nil) {
         loadData(url: url) { data in
             guard let data = data else {
-                completion(nil)
+                completion?(nil)
                 return
             }
 
             guard let image = UIImage(data: data) else {
                 NSLog("Can't convert data to image from URL \(url.absoluteString)")
-                completion(nil)
+                completion?(nil)
                 return
             }
 
-            completion(image)
+            completion?(image)
         }
     }
 
