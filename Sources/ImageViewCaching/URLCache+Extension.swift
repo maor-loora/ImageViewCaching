@@ -20,7 +20,7 @@ public extension URLCache {
             }
 
             guard let image = UIImage(data: data) else {
-                log.error("Can't convert data to image from URL \(url.absoluteString)")
+                NSLog("Can't convert data to image from URL \(url.absoluteString)")
                 completion(nil)
                 return
             }
@@ -49,7 +49,7 @@ public extension URLCache {
                         completion(nil)
                         var errorText = "Can't get data from URL \(url.absoluteString) with status code "
                         errorText += "\(String(describing: (response as? HTTPURLResponse)?.statusCode))"
-                        log.error(errorText)
+                        NSLog(errorText)
                     }
                 }).resume()
             }
