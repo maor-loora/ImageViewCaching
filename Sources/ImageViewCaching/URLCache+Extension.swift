@@ -34,23 +34,25 @@ extension URLCache {
         var request = URLRequest(url: url)
         request.cachePolicy = .returnCacheDataElseLoad
 
-        if let data = self?.cachedResponse(for: request)?.data {
-            completion(data)
-        } else {
-            URLSession.shared.dataTask(with: request, completionHandler: { [weak self] data, response, error in
-                if let data = data, let response = response,
-                   ((response as? HTTPURLResponse)?.statusCode ?? 500) < 300 {
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            if let data = self?.cachedResponse(for: request)?.data {
+                completion(data)
+            } else {
+                URLSession.shared.dataTask(with: request, completionHandler: { [weak self] data, response, error in
+                    if let data = data, let response = response,
+                       ((response as? HTTPURLResponse)?.statusCode ?? 500) < 300 {
 
-                    let cachedData = CachedURLResponse(response: response, data: data)
-                    self?.storeCachedResponse(cachedData, for: request)
-                    completion(data)
-                } else {
-                    completion(nil)
-                    var errorText = "Can't get data from URL \(url.absoluteString) with status code "
-                    errorText += "\(String(describing: (response as? HTTPURLResponse)?.statusCode))"
-                    NSLog(errorText)
-                }
-            }).resume()
+                        let cachedData = CachedURLResponse(response: response, data: data)
+                        self?.storeCachedResponse(cachedData, for: request)
+                        completion(data)
+                    } else {
+                        completion(nil)
+                        var errorText = "Can't get data from URL \(url.absoluteString) with status code "
+                        errorText += "\(String(describing: (response as? HTTPURLResponse)?.statusCode))"
+                        NSLog(errorText)
+                    }
+                }).resume()
+            }
         }
     }
 
