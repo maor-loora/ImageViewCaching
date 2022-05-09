@@ -27,7 +27,7 @@ extension UIImageView {
 
         imageDescription = url
 
-        if placeholderImage.hasValue {
+        if let placeholderImage = placeholderImage {
             self.image = placeholderImage
         } else {
             self.image = nil
