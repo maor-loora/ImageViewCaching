@@ -34,7 +34,7 @@ extension URLCache {
         var request = URLRequest(url: url)
         request.cachePolicy = .returnCacheDataElseLoad
 
-        if let data = self?.cachedResponse(for: request)?.data {
+        if let data = self.cachedResponse(for: request)?.data {
             completion(data)
         } else {
             URLSession.shared.dataTask(with: request, completionHandler: { [weak self] data, response, error in
