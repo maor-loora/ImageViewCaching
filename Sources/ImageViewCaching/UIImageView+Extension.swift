@@ -27,10 +27,8 @@ extension UIImageView {
 
         imageDescription = url
 
-        if let placeholderImage = placeholderImage {
+        if self.image == nil, let placeholderImage = placeholderImage {
             self.image = placeholderImage
-        } else {
-            self.image = nil
         }
 
         let cache = URLCache.shared
