@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "ImageViewCaching",
     platforms: [
-            .iOS(.v13),
+            .iOS(.v14),
             .macOS(.v10_12)
     ],
     products: [

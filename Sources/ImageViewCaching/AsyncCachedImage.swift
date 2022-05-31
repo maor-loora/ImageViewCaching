@@ -52,6 +52,10 @@ public struct AsyncCachedImage<ContentPlaceholder, ContentError>: View where Con
             viewModel.update(with: url)
             viewModel.loadData()
         }
+        .onChange(of: url) { newUrl in
+            viewModel.update(with: newUrl)
+            viewModel.loadData()
+        }
     }
 
     @ViewBuilder
